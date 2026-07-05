@@ -258,7 +258,7 @@
 <!-- ============ TOP BAR ============ -->
 <header class="topbar">
   <div class="wrap topbar-inner">
-    <div class="partno">DS-AG2026 <span>·</span> REV 1.5</div>
+    <div class="partno">DS-AG2026 <span>·</span> REV 1.8</div>
     <nav class="topnav" aria-label="Sections">
       <a href="#specs">Specs</a>
       <a href="#projects">Projects</a>
@@ -295,6 +295,7 @@
           <li>Bare-metal firmware on TI TM4C123 &amp; STM32 — SPI, I2C, UART drivers, no HAL</li>
           <li>Embedded networking from scratch: DHCP client state machine over Ethernet</li>
           <li>Senior-design autonomous vehicle (IGVC): Jetson, LiDAR, motor drive &amp; lane detection</li>
+          <li>GPU programming in CUDA C/C++: work-efficient parallel scan (Blelloch) with shared-memory optimization</li>
           <li>Python automation integrating Claude, ElevenLabs &amp; YouTube APIs</li>
           <li>B.S. Computer Engineering, UT Arlington — expected Dec 2026</li>
           <li>Founder &amp; operator, ilovemystates.com</li>
@@ -446,11 +447,13 @@
         <p>
           UT Arlington's entry for the Intelligent Ground Vehicle Competition —
           a self-driving vehicle built by a seven-person senior design team on
-          an NVIDIA Jetson with LiDAR, camera vision, and GPS. My contributions:
+          a Jetson Orin Nano with LiDAR, camera vision, and GPS, plus dual
+          TM4C123 microcontrollers linked over nRF24L01 radios to electrically
+          isolate motor noise from the compute side. My contributions:
           installed and wired the Sabertooth 2x32 motor drive system, rebuilt
           the power and signal wiring for reliability, tuned lane-detection and
-          autodrive behavior, and worked on the NRF24-based wireless
-          emergency stop.
+          autodrive behavior, and prototyped the nRF24 wireless emergency
+          stop (handed off for competition integration).
         </p>
       </div>
       <div class="proj-meta">
@@ -459,10 +462,36 @@
       </div>
     </article>
 
-    <!-- 2.3 FP calculator -->
+    <!-- 2.3 CUDA -->
     <article class="proj">
       <div class="proj-head">
         <span class="proj-num">2.3</span>
+        <h3>Parallel Prefix Sum on GPU — CUDA</h3>
+        <div class="chips"><span class="chip">CUDA C/C++</span><span class="chip">GPU</span><span class="chip">Parallel</span></div>
+      </div>
+      <div class="proj-body">
+        <p>
+          A two-person project from UTA's GPU programming course: parallel
+          prefix sum (scan) in CUDA C/C++, built in three stages — a
+          sequential CPU baseline, a naive one-thread-per-element kernel,
+          then a work-efficient Blelloch scan using shared memory and
+          coalesced global reads. Course benchmarks measured the optimized
+          kernel at roughly 40x over the sequential baseline on
+          million-element arrays. Backed by a semester of CUDA lab work:
+          multidimensional grids, shared-memory benchmarking, convolutions,
+          reductions, and scans.
+        </p>
+      </div>
+      <div class="proj-meta">
+        <span>STAGES: CPU → NAIVE KERNEL → BLELLOCH + SHARED MEM</span>
+        <span>TEAM: 2 — GPU PROGRAMMING, UTA</span>
+      </div>
+    </article>
+
+    <!-- 2.4 FP calculator -->
+    <article class="proj">
+      <div class="proj-head">
+        <span class="proj-num">2.4</span>
         <h3>Floating-Point Adder/Subtractor</h3>
         <div class="chips"><span class="chip">Verilog</span><span class="chip">DE10-Lite</span><span class="chip">FPGA</span></div>
       </div>
@@ -483,10 +512,10 @@
       </div>
     </article>
 
-    <!-- 2.4 DHCP -->
+    <!-- 2.5 DHCP -->
     <article class="proj">
       <div class="proj-head">
-        <span class="proj-num">2.4</span>
+        <span class="proj-num">2.5</span>
         <h3>Embedded Ethernet Stack with DHCP Client</h3>
         <div class="chips"><span class="chip">Embedded C</span><span class="chip">TM4C123</span><span class="chip">ENC28J60</span></div>
       </div>
@@ -506,32 +535,36 @@
       </div>
     </article>
 
-    <!-- 2.5 Motor -->
+    <!-- 2.6 Motor -->
     <article class="proj">
       <div class="proj-head">
-        <span class="proj-num">2.5</span>
+        <span class="proj-num">2.6</span>
         <h3>Closed-Loop DC Motor Control System</h3>
         <div class="chips"><span class="chip">Embedded C</span><span class="chip">STM32</span><span class="chip">Sensors</span></div>
       </div>
       <div class="proj-body">
         <p>
-          A motor control platform on an STM32 Nucleo-F446RE: TB6612FNG H-bridge
-          drive, PID closed-loop speed control from quadrature encoder feedback,
-          ACS712 current sensing, HC-SR04 ultrasonic obstacle detection,
-          and live telemetry on an SSD1306 OLED over I2C. Every driver
-          written at the register level.
+          A three-person Embedded Systems II project: a 1 kHz PID
+          speed-control system on an STM32F446RE running at 180 MHz. My
+          role: component selection and the complete hardware integration —
+          TB6612FNG H-bridge, quadrature-encoder DC motor, ACS712 current
+          sensor, SSD1306 OLED, HC-SR04, and SD-card logging module — with
+          full pin mapping across PWM, SPI, I2C, ADC, encoder timer, and
+          GPIO, 12 V power with shared common ground, and breadboard
+          bring-up. Teammates built the PID controller and firmware
+          infrastructure; all features completed and demoed.
         </p>
       </div>
       <div class="proj-meta">
-        <span>INTERFACES: PWM · GPIO · ADC · I2C</span>
-        <span>SOURCE: <a href="https://github.com/mynameisamritgautam">github.com/mynameisamritgautam</a></span>
+        <span>ROLE: HARDWARE INTEGRATION · PIN MAPPING · POWER</span>
+        <span>TEAM: 3 — EMBEDDED SYSTEMS II, UTA</span>
       </div>
     </article>
 
-    <!-- 2.6 STM32 -->
+    <!-- 2.7 STM32 -->
     <article class="proj">
       <div class="proj-head">
-        <span class="proj-num">2.6</span>
+        <span class="proj-num">2.7</span>
         <h3>Bare-Metal Peripheral Drivers — STM32</h3>
         <div class="chips"><span class="chip">Embedded C</span><span class="chip">STM32</span><span class="chip">Keil µVision</span></div>
       </div>
@@ -550,10 +583,10 @@
       </div>
     </article>
 
-    <!-- 2.7 Pipeline -->
+    <!-- 2.8 Pipeline -->
     <article class="proj">
       <div class="proj-head">
-        <span class="proj-num">2.7</span>
+        <span class="proj-num">2.8</span>
         <h3>Automated Content Production Pipeline</h3>
         <div class="chips"><span class="chip">Python</span><span class="chip">REST APIs</span><span class="chip">OAuth 2.0</span></div>
       </div>
@@ -573,29 +606,6 @@
       </div>
     </article>
 
-    <!-- 2.8 IR remote -->
-    <article class="proj">
-      <div class="proj-head">
-        <span class="proj-num">2.8</span>
-        <h3>UART-Commanded IR TV Controller</h3>
-        <div class="chips"><span class="chip">Embedded C</span><span class="chip">TM4C123</span><span class="chip">IR</span></div>
-      </div>
-      <div class="proj-body">
-        <p>
-          A solo Embedded Systems 1 project: a command-line interface over
-          UART (PuTTY) on the TM4C123 that drives an infrared transmitter to
-          control a real TV — type a command at the terminal and the board
-          encodes and fires the IR code that powers the lab TV on or off.
-          Serial protocol on one side, IR signaling on the other, bare-metal
-          C in between.
-        </p>
-      </div>
-      <div class="proj-meta">
-        <span>INTERFACES: UART · IR</span>
-        <span>SOLO — EMBEDDED SYSTEMS 1, UTA</span>
-      </div>
-    </article>
-
   </div>
 </section>
 
@@ -612,7 +622,7 @@
       <tbody>
         <tr>
           <td>LANGUAGES</td>
-          <td>C, Python, Verilog / SystemVerilog, SQL, Bash</td>
+          <td>C, Python, CUDA C/C++, Verilog / SystemVerilog, SQL, Bash</td>
           <td>C and Verilog at register / RTL level; Python for automation &amp; data work</td>
         </tr>
         <tr>
@@ -677,6 +687,9 @@
       <tr><td>1.3</td><td>JUL 2026</td><td>Added floating-point adder/subtractor (Digital Logic II)</td></tr>
       <tr><td>1.4</td><td>JUL 2026</td><td>Repositioned title: embedded/FPGA-first, data science as trajectory</td></tr>
       <tr><td>1.5</td><td>JUL 2026</td><td>Added PID control detail, pipeline cadence, lab instrumentation</td></tr>
+      <tr><td>1.6</td><td>JUL 2026</td><td>Added CUDA parallel prefix sum; retired IR controller to archive</td></tr>
+      <tr><td>1.7</td><td>JUL 2026</td><td>Corrected motor-control attribution: team of 3, role = hardware integration</td></tr>
+      <tr><td>1.8</td><td>JUL 2026</td><td>IGVC updated: Orin Nano, nRF24 isolation link, e-stop wording</td></tr>
     </table>
     <p class="foot-note">© 2026 Amrit Gautam. Formatted as a datasheet, because that's what I read all day.</p>
   </div>
